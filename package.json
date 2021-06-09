@@ -1,18 +1,40 @@
 {
-  "name": "<NAME>",
+  "name": "rdf-wrap",
   "version": "0.0.1",
-  "description": "<DESCRIPTION>",
+  "description": "RDF wrapper library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "repository": "<REPOSITORY>",
-  "bugs": "<REPOSITORY>/issues",
-  "files": [ "dist" ],
+  "repository": "https://github.com/matthieubosquet/rdf-wrap",
+  "bugs": "https://github.com/matthieubosquet/rdf-wrap/issues",
+  "files": [
+    "dist"
+  ],
   "license": "MIT",
-  "keywords": [ ],
+  "keywords": [],
   "scripts": {
     "audit": "npm audit --production --audit-level=high",
     "build": "tsc",
     "lint": "eslint --cache --fix --ignore-path .gitignore .",
     "test": "jest"
+  },
+  "devDependencies": {
+    "@rdfjs/types": "^1.0.1",
+    "@solid/eslint-config-base": "^0.2.2",
+    "@tsconfig/node12": "^1.0.8",
+    "@types/jest": "^26.0.23",
+    "@types/node": "^15.12.2",
+    "@typescript-eslint/eslint-plugin": "^4.26.1",
+    "@typescript-eslint/parser": "^4.26.1",
+    "eslint": "^7.28.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jest": "^24.3.6",
+    "eslint-plugin-prettier": "^3.4.0",
+    "jest": "^27.0.4",
+    "jest-circus": "^27.0.4",
+    "prettier": "^2.3.1",
+    "ts-jest": "^27.0.3",
+    "typescript": "^4.3.2"
   }
 }
