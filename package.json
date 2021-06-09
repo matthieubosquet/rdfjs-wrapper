@@ -15,7 +15,7 @@
     "audit": "npm audit --production --audit-level=high",
     "build": "tsc",
     "lint": "eslint --cache --fix --ignore-path .gitignore .",
-    "start": "node .",
+    "start": "npm run build && node .",
     "test": "jest"
   },
   "devDependencies": {
