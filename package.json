@@ -1,7 +1,7 @@
 {
-  "name": "rdf-wrap",
+  "name": "rdfjs-wrapper",
   "version": "0.0.1",
-  "description": "RDF wrapper library",
+  "description": "RDFJS compliant graph wrapping library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": "https://github.com/matthieubosquet/rdf-wrap",
@@ -10,7 +10,12 @@
     "dist"
   ],
   "license": "MIT",
-  "keywords": [],
+  "keywords": [
+    "rdfjs",
+    "wrapper",
+    "rdf",
+    "mapping"
+  ],
   "scripts": {
     "audit": "npm audit --production --audit-level high",
     "build": "tsc",
