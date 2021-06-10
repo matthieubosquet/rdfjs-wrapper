@@ -21,7 +21,8 @@
     "build": "tsc",
     "lint": "eslint --cache --fix --ignore-path .gitignore .",
     "start": "npm run build && node .",
-    "test": "jest"
+    "test": "npm run test:unit",
+    "test:unit": "jest test/unit.test.ts"
   },
   "devDependencies": {
     "@rdfjs/types": "^1.0.1",
