@@ -1,9 +1,9 @@
 import { TestSuite } from "../../util";
-import { requirementX } from "./x";
+import { WrapperRequirements } from "./WrapperRequirements";
 
 export const unitTests = new TestSuite({
   label: "Unit Tests",
   requirements: [
-    requirementX
+    WrapperRequirements
   ],
 });

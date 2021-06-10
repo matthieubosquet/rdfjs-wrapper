@@ -1,6 +1,6 @@
 ﻿import { DatasetCore, DataFactory, Quad_Subject } from "@rdfjs/types";
 import { Vocabulary } from "./Vocabulary";
-import { Wrapper } from "./Wrapper";
+import { Wrapper } from "../../src";
 
 
 export class Child extends Wrapper {

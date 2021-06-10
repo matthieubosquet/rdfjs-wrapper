@@ -1,1 +1,3 @@
-export * from './x';
+export * from './Child';
+export * from './Parent';
+export * from './Vocabulary';

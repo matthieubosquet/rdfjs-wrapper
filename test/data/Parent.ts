@@ -1,16 +1,7 @@
-﻿import type { DatasetCore, DataFactory, Quad_Subject, Term } from "@rdfjs/types";
+﻿import type { DatasetCore, DataFactory, Quad_Subject } from "@rdfjs/types";
 import { Child } from "./Child";
 import { Vocabulary } from "./Vocabulary";
-import { Wrapper } from "./Wrapper";
-import { WrappingSet } from "./WrappingSet"
-
-function stringFactory(term: Term, dataset: DatasetCore): string {
-    if (term.termType !== "Literal") {
-        throw "Object is not a literal"
-    }
-
-    return term.value
-}
+import { stringFactory, Wrapper, WrappingSet } from "../../src";
 
 export class Parent extends Wrapper {
     private constructor(term: Quad_Subject, dataset: DatasetCore, factory: DataFactory) {

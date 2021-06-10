@@ -49,7 +49,7 @@ export class WrappingSet<T extends { term: Quad_Subject; } | string | number> im
     }
 
     public get size(): number {
-        return -1;
+        return Array.from(this).length;
     };
 
     public [Symbol.iterator](): IterableIterator<T> {
