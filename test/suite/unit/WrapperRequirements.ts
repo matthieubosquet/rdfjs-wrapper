@@ -5,7 +5,7 @@ import { Parent } from "../../data";
 const rdf = `
 PREFIX :<http://example.com/>
 [
-    :p1 "o1" ;
+    :singularStringPredicate "o1" ;
     :child [
         :name "name" ;
     ] ;
@@ -25,8 +25,8 @@ export const WrapperRequirements = new TestRequirement(
     label: "Test wrapper",
     cases: [
       new TestCase({
-        description: "wrapper.p1 is o1",
-        input: w.p1,
+        description: "wrapper.singularStringPredicate is o1",
+        input: w.singularStringPredicate,
         output: "o1",
       }),
       new TestCase({
@@ -35,23 +35,23 @@ export const WrapperRequirements = new TestRequirement(
         output: "name",
       }),
       new TestCase({
-        description: "wrapper.p1 is changed to o2",
-        input: (() => { w.p1 = "o2"; return w.p1 })(),
+        description: "wrapper.singularStringPredicate is changed to o2",
+        input: (() => { w.singularStringPredicate = "o2"; return w.singularStringPredicate })(),
         output: "o2",
       }),
       new TestCase({
-        description: "wrapper.p2 is empty",
-        input: w.p2.size,
+        description: "wrapper.stringSetPredicate is empty",
+        input: w.stringSetPredicate.size,
         output: 0,
       }),
       new TestCase({
-        description: "wrapper.p2 is changed to have two items",
-        input: (() => { w.p2.add("p2a"); w.p2.add("p2b"); return w.p2.size })(),
+        description: "wrapper.stringSetPredicate is changed to have two items",
+        input: (() => { w.stringSetPredicate.add("x"); w.stringSetPredicate.add("y"); return w.stringSetPredicate.size })(),
         output: 2
       }),
       new TestCase({
-        description: "wrapper.p2 has p2a",
-        input: w.p2.has("p2a"),
+        description: "wrapper.stringSetPredicate has x",
+        input: w.stringSetPredicate.has("x"),
         output: true
       })
     ]

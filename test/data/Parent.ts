@@ -12,16 +12,16 @@ export class Parent extends Wrapper {
         return new Parent(term, dataset, factory);
     }
 
-    public get p1(): string {
-        return this.getSingularString(Vocabulary.p1);
+    public get singularStringPredicate(): string {
+        return this.getSingularString(Vocabulary.singularStringPredicate);
     }
 
-    public set p1(value: string) {
-        this.setSingularString(Vocabulary.p1, value);
+    public set singularStringPredicate(value: string) {
+        this.setSingularString(Vocabulary.singularStringPredicate, value);
     }
 
-    public get p2(): Set<string> {
-        return new WrappingSet(this.term, Vocabulary.p2, this.dataset, this.factory, stringFactory)
+    public get stringSetPredicate(): Set<string> {
+        return new WrappingSet(this.term, Vocabulary.stringSetPredicate, this.dataset, this.factory, stringFactory)
     }
 
     public get child(): Child {

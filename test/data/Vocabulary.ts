@@ -1,17 +1,19 @@
 ﻿import type { Quad_Predicate } from "@rdfjs/types";
 import { DataFactory } from "n3"
 
+const baseUri = "http://example.com/";
+
 export const Vocabulary = {
-    get p1(): Quad_Predicate {
-        return DataFactory.namedNode("http://example.com/p1")
+    get singularStringPredicate(): Quad_Predicate {
+        return DataFactory.namedNode(baseUri.concat("singularStringPredicate"))
     },
-    get p2(): Quad_Predicate {
-        return DataFactory.namedNode("http://example.com/p2")
+    get stringSetPredicate(): Quad_Predicate {
+        return DataFactory.namedNode(baseUri.concat("stringSetPredicate"))
     },
     get child(): Quad_Predicate {
-        return DataFactory.namedNode("http://example.com/child")
+        return DataFactory.namedNode(baseUri.concat("child"))
     },
     get name(): Quad_Predicate {
-        return DataFactory.namedNode("http://example.com/name")
+        return DataFactory.namedNode(baseUri.concat("name"))
     },
 }
