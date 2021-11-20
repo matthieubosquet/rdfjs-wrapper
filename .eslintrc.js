@@ -1,3 +1,3 @@
 module.exports = {
-  extends: [ "@solid/eslint-config-base" ]
+  extends: ["@solid/eslint-config-base"],
 };

@@ -6,9 +6,7 @@ module.exports = {
   testTimeout: 1000,
   coverageDirectory: "./coverage/",
   collectCoverage: true,
-  collectCoverageFrom: [
-    "src/**/*.ts"
-  ],
+  collectCoverageFrom: ["src/**/*.ts"],
   coverageThreshold: {
     global: {
       branches: 0,

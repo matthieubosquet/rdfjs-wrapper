@@ -1,3 +1,3 @@
-export * from './TestCase';
-export * from './TestRequirement';
-export * from './TestSuite';
+export * from "./TestCase";
+export * from "./TestRequirement";
+export * from "./TestSuite";

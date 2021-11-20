@@ -1,9 +1,9 @@
-import { DatasetCore, Term } from "@rdfjs/types"
+import type { DatasetCore, Term } from "@rdfjs/types";
 
 export function stringFactory(term: Term, dataset: DatasetCore): string {
   if (term.termType !== "Literal") {
-      throw "Object is not a literal"
+    throw new Error("Object is not a literal");
   }
 
-  return term.value
+  return term.value;
 }

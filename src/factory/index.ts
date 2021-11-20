@@ -1,1 +1,1 @@
-export * from './stringFactory';
+export * from "./stringFactory";

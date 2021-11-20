@@ -1,4 +1,4 @@
-import { ITest } from '.';
+import type { ITest } from ".";
 
 export interface ITestCase extends ITest {
   readonly input: unknown;
