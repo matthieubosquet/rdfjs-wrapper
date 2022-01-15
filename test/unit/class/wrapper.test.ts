@@ -53,8 +53,4 @@ describe("Wrapper", () => {
       true
     );
   });
-
-  it("adds a child", () => {
-    expect(x.stringSetProperty.size).toBe(0);
-  });
 });

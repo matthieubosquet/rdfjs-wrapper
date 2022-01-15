@@ -1,5 +1,11 @@
-﻿import type { DatasetCore, DataFactory, Quad_Subject } from "@rdfjs/types";
-import { stringFactory, Wrapper, WrappingSet } from "../../src/mod";
+﻿import type { DataFactory, DatasetCore, Quad_Subject } from "@rdfjs/types";
+import {
+  getLiteral,
+  getNode,
+  stringFactory,
+  Wrapper,
+  WrappingSet,
+} from "../../src/mod";
 import { Child } from "./child";
 import { VOCABULARY } from "./vocabulary";
 
@@ -13,7 +19,12 @@ export class Parent extends Wrapper {
   }
 
   public get singularStringProperty(): string {
-    return this.getSingularString(VOCABULARY.hasSingularString);
+    return getLiteral(
+      this.subject,
+      this.dataset,
+      VOCABULARY.hasSingularString,
+      stringFactory
+    );
   }
 
   public set singularStringProperty(value: string) {
@@ -31,7 +42,13 @@ export class Parent extends Wrapper {
   }
 
   public get singularProperty(): Child {
-    return this.getSingular<Child>(VOCABULARY.hasChild, Child.wrap.bind(this));
+    return getNode(
+      this.subject,
+      this.dataset,
+      this.factory,
+      VOCABULARY.hasChild,
+      Child.wrap.bind(this)
+    );
   }
 
   public set singularProperty(value: Child) {

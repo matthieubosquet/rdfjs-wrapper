@@ -1,10 +1,15 @@
-﻿import type { DatasetCore, DataFactory, Quad_Subject } from "@rdfjs/types";
-import { Wrapper } from "../../src/mod";
+﻿import type {
+  BlankNode,
+  DataFactory,
+  DatasetCore,
+  NamedNode,
+} from "@rdfjs/types";
+import { getLiteral, stringFactory, Wrapper } from "../../src/mod";
 import { VOCABULARY } from "./vocabulary";
 
 export class Child extends Wrapper {
   public static wrap(
-    subject: Quad_Subject,
+    subject: BlankNode | NamedNode,
     dataset: DatasetCore,
     factory: DataFactory
   ): Child {
@@ -12,7 +17,12 @@ export class Child extends Wrapper {
   }
 
   public get name(): string {
-    return this.getSingularString(VOCABULARY.hasName);
+    return getLiteral(
+      this.subject,
+      this.dataset,
+      VOCABULARY.hasName,
+      stringFactory
+    );
   }
 
   public set name(value: string) {
