@@ -2,6 +2,8 @@
 import {
   getLiteral,
   getNode,
+  setLiteral,
+  setNode,
   stringFactory,
   Wrapper,
   WrappingSet,
@@ -28,7 +30,13 @@ export class Parent extends Wrapper {
   }
 
   public set singularStringProperty(value: string) {
-    this.setSingularString(VOCABULARY.hasSingularString, value);
+    setLiteral(
+      this.subject,
+      this.dataset,
+      this.factory,
+      VOCABULARY.hasSingularString,
+      value
+    );
   }
 
   public get stringSetProperty(): Set<string> {
@@ -52,6 +60,12 @@ export class Parent extends Wrapper {
   }
 
   public set singularProperty(value: Child) {
-    this.setSingular(VOCABULARY.hasChild, value);
+    setNode(
+      this.subject,
+      this.dataset,
+      this.factory,
+      VOCABULARY.hasChild,
+      value
+    );
   }
 }

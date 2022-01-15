@@ -4,7 +4,7 @@
   DatasetCore,
   NamedNode,
 } from "@rdfjs/types";
-import { getLiteral, stringFactory, Wrapper } from "../../src/mod";
+import { getLiteral, setLiteral, stringFactory, Wrapper } from "../../src/mod";
 import { VOCABULARY } from "./vocabulary";
 
 export class Child extends Wrapper {
@@ -26,6 +26,12 @@ export class Child extends Wrapper {
   }
 
   public set name(value: string) {
-    this.setSingularString(VOCABULARY.hasName, value);
+    setLiteral(
+      this.subject,
+      this.dataset,
+      this.factory,
+      VOCABULARY.hasName,
+      value
+    );
   }
 }
