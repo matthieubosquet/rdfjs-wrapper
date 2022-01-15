@@ -4,91 +4,91 @@
   Quad_Predicate,
   DatasetCore,
 } from "@rdfjs/types";
+import { CardinalityError } from "../error/cardinality_error";
+import { MissingValueError } from "../error/missing_value_error";
+import { TermTypeError } from "../error/term_type_error";
+import { stringFactory } from "../factory/string_factory";
 
 export class Wrapper {
-  public term: Quad_Subject;
+  public subject: Quad_Subject;
 
   protected dataset: DatasetCore;
 
   protected factory: DataFactory;
 
   protected constructor(
-    term: Quad_Subject,
+    subject: Quad_Subject,
     dataset: DatasetCore,
     factory: DataFactory
   ) {
-    this.term = term;
+    this.subject = subject;
     this.dataset = dataset;
     this.factory = factory;
   }
 
-  public setSingularString(predicate: Quad_Predicate, value: string): void {
-    for (const q of this.dataset.match(this.term, predicate)) {
+  public setSingularString(property: Quad_Predicate, value: string): void {
+    for (const q of this.dataset.match(this.subject, property)) {
       this.dataset.delete(q);
     }
 
     this.dataset.add(
-      this.factory.quad(this.term, predicate, this.factory.literal(value))
+      this.factory.quad(this.subject, property, this.factory.literal(value))
     );
   }
 
-  public getSingularString(predicate: Quad_Predicate): string {
-    const triples = this.dataset.match(this.term, predicate);
+  public getSingularString(property: Quad_Predicate): string {
+    const triples = this.dataset.match(this.subject, property);
     const iter = triples[Symbol.iterator]();
     const triple = iter.next();
 
     if (triple.done) {
-      throw new Error("Required value missing");
+      throw new MissingValueError(this.subject.value, property.value);
+    }
+
+    if (!iter.next().done) {
+      throw new CardinalityError(this.subject.value, property.value, ">1", "1");
     }
 
     const { object } = triple.value;
 
-    if (object.termType !== "Literal") {
-      throw new Error("Value is not a literal");
-    }
-
-    if (!iter.next().done) {
-      throw new Error("More than one value");
-    }
-
-    return object.value;
+    return stringFactory(object);
   }
 
-  public setSingular<T extends { term: Quad_Subject }>(
-    predicate: Quad_Predicate,
-    value: T
+  public setSingular(
+    property: Quad_Predicate,
+    value: { subject: Quad_Subject }
   ): void {
-    for (const q of this.dataset.match(this.term, predicate)) {
+    for (const q of this.dataset.match(this.subject, property)) {
       this.dataset.delete(q);
     }
 
-    this.dataset.add(this.factory.quad(this.term, predicate, value.term));
+    this.dataset.add(this.factory.quad(this.subject, property, value.subject));
   }
 
-  public getSingular<T extends { term: Quad_Subject }>(
-    predicate: Quad_Predicate,
+  public getSingular<T extends { subject: Quad_Subject }>(
+    property: Quad_Predicate,
     valueFactory: (
-      term: Quad_Subject,
+      subject: Quad_Subject,
       dataset: DatasetCore,
       factory: DataFactory
     ) => T
   ): T {
-    const triples = this.dataset.match(this.term, predicate);
+    const triples = this.dataset.match(this.subject, property);
     const iter = triples[Symbol.iterator]();
     const triple = iter.next();
 
     if (triple.done) {
-      throw new Error("Required value missing");
+      throw new MissingValueError(this.subject.value, property.value);
     }
 
     const { object } = triple.value;
 
-    if (object.termType === "Literal") {
-      throw new Error("Value is a literal");
+    if (object.termType !== "NamedNode" && object.termType !== "BlankNode") {
+      throw new TermTypeError(object.termType, "NamedNode or BlankNode");
     }
 
     if (!iter.next().done) {
-      throw new Error("More than one value");
+      throw new CardinalityError(this.subject.value, property.value, ">1", "1");
     }
 
     return valueFactory(object, this.dataset, this.factory);

@@ -6,38 +6,33 @@
   Term,
   Quad_Object,
 } from "@rdfjs/types";
+import { Wrapper } from "./wrapper";
 
 export class WrappingSet<T extends { term: Quad_Subject } | string | number>
+  extends Wrapper
   implements Set<T>
 {
-  private subject: Quad_Subject;
+  private property: Quad_Predicate;
 
-  private predicate: Quad_Predicate;
-
-  private dataset: DatasetCore;
-
-  private factory: DataFactory;
-
-  private valueFactory: (term: Term, dataset: DatasetCore) => T;
+  private valueFactory: (term: Term, dataset?: DatasetCore) => T;
 
   constructor(
     subject: Quad_Subject,
-    predicate: Quad_Predicate,
     dataset: DatasetCore,
     factory: DataFactory,
-    valueFactory: (term: Term, dataset: DatasetCore) => T
+    property: Quad_Predicate,
+    // eslint-disable-next-line no-shadow
+    valueFactory: (term: Term, dataset?: DatasetCore) => T
   ) {
-    this.subject = subject;
-    this.predicate = predicate;
-    this.dataset = dataset;
-    this.factory = factory;
+    super(subject, dataset, factory);
+    this.property = property;
     this.valueFactory = valueFactory;
   }
 
   public add(value: T): this {
     const q = this.factory.quad(
       this.subject,
-      this.predicate,
+      this.property,
       this.convert(value)
     );
     this.dataset.add(q);
@@ -45,7 +40,7 @@ export class WrappingSet<T extends { term: Quad_Subject } | string | number>
   }
 
   public clear(): void {
-    for (const q of this.dataset.match(this.subject, this.predicate)) {
+    for (const q of this.dataset.match(this.subject, this.property)) {
       this.dataset.delete(q);
     }
   }
@@ -57,7 +52,7 @@ export class WrappingSet<T extends { term: Quad_Subject } | string | number>
 
     for (const q of this.dataset.match(
       this.subject,
-      this.predicate,
+      this.property,
       this.convert(value)
     )) {
       this.dataset.delete(q);
@@ -67,7 +62,7 @@ export class WrappingSet<T extends { term: Quad_Subject } | string | number>
 
   public forEach(
     callbackfn: (item: T, index: T, set: Set<T>) => void,
-    thisArg?: any
+    thisArg?: unknown
   ): void {
     for (const item of this) {
       callbackfn.call(thisArg, item, item, this);
@@ -76,7 +71,7 @@ export class WrappingSet<T extends { term: Quad_Subject } | string | number>
 
   public has(value: T): boolean {
     return this.dataset.has(
-      this.factory.quad(this.subject, this.predicate, this.convert(value))
+      this.factory.quad(this.subject, this.property, this.convert(value))
     );
   }
 
@@ -99,13 +94,13 @@ export class WrappingSet<T extends { term: Quad_Subject } | string | number>
   }
 
   public *values(): IterableIterator<T> {
-    for (const q of this.dataset.match(this.subject, this.predicate)) {
+    for (const q of this.dataset.match(this.subject, this.property)) {
       yield this.valueFactory(q.object, this.dataset);
     }
   }
 
   public get [Symbol.toStringTag](): string {
-    return `collection wrapper for subject ${this.subject.value} predicate ${this.predicate.value}`;
+    return `collection wrapper for subject ${this.subject.value} predicate ${this.property.value}`;
   }
 
   private convert(value: T): Quad_Object {

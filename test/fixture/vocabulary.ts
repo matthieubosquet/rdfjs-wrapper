@@ -4,16 +4,16 @@ import { DataFactory } from "n3";
 export const baseUri = "https://example.org/";
 
 export const VOCABULARY = {
-  get singularStringPredicate(): Quad_Predicate {
+  get hasSingularString(): Quad_Predicate {
     return DataFactory.namedNode(baseUri.concat("singularStringPredicate"));
   },
-  get stringSetPredicate(): Quad_Predicate {
+  get hasStringSet(): Quad_Predicate {
     return DataFactory.namedNode(baseUri.concat("stringSetPredicate"));
   },
-  get child(): Quad_Predicate {
+  get hasChild(): Quad_Predicate {
     return DataFactory.namedNode(baseUri.concat("child"));
   },
-  get name(): Quad_Predicate {
+  get hasName(): Quad_Predicate {
     return DataFactory.namedNode(baseUri.concat("name"));
   },
 };

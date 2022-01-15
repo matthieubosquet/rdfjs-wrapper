@@ -1,15 +1,13 @@
-name: Audit
+name: Lint
 
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
-  schedule:
-    - cron: "37 7 * * *"
 
 jobs:
-  audit:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -17,4 +15,5 @@ jobs:
         with:
           node-version: "16.x"
           registry-url: "https://registry.npmjs.org"
-      - run: npm audit --production --audit-level high
+      - run: npm ci --ignore-scripts
+      - run: npm run lint:ci

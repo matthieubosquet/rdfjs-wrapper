@@ -1,49 +1,57 @@
 {
   "name": "rdfjs-wrapper",
-  "version": "0.1.3",
-  "description": "RDFJS compliant graph wrapping library",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "repository": "https://github.com/matthieubosquet/rdf-wrap",
-  "bugs": "https://github.com/matthieubosquet/rdf-wrap/issues",
-  "files": [
-    "dist"
-  ],
+  "version": "0.1.4",
+  "description": "RDF/JS compliant graph wrapping library",
   "license": "MIT",
+  "repository": "https://github.com/matthieubosquet/rdfjs-wrapper",
+  "bugs": "https://github.com/matthieubosquet/rdfjs-wrapper/issues",
+  "homepage": "https://github.com/matthieubosquet/rdfjs-wrapper#readme",
   "keywords": [
     "rdfjs",
     "wrapper",
     "rdf",
     "mapping"
   ],
+  "contributors": [
+    "Matthieu Bosquet <matthieu@cognithive.com> (https://github.com/matthieubosquet)",
+    "Samu Lang (https://github.com/langsamu)"
+  ],
+  "main": "dist/mod.js",
+  "types": "dist/types.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "audit": "npm audit --production --audit-level high",
+    "audit": "npm audit --production --audit-level=high",
     "build": "tsc",
-    "lint": "eslint --cache --fix --ignore-path .gitignore .",
-    "start": "npm run build && node .",
+    "lint": "npm run lint:eslint -- --cache --fix && npm run lint:prettier -- --write",
+    "lint:ci": "npm run lint:eslint && npm run lint:prettier",
+    "lint:eslint": "eslint --ignore-path .gitignore .",
+    "lint:prettier": "prettier --ignore-path .gitignore '**/*.{css,html,json,md,mdx,yml}'",
+    "prepublishOnly": "npm run audit && npm ci --ignore-scripts && npm run build && npm run test",
+    "start": "npm run build -- --watch",
     "test": "npm run test:unit",
-    "test:unit": "jest test/unit.test.ts"
+    "test:unit": "jest --config .jestrc.js"
   },
   "devDependencies": {
     "@rdfjs/types": "^1.0.1",
-    "@solid/eslint-config-base": "^0.3.0",
-    "@tsconfig/node16": "^1.0.2",
-    "@types/jest": "^27.0.3",
+    "@solid/eslint-config-base": "^0.5.0",
+    "@tsconfig/node14": "^1.0.1",
+    "@types/jest": "^27.4.0",
     "@types/n3": "^1.10.4",
-    "@types/node": "^16.11.9",
-    "@typescript-eslint/eslint-plugin": "^5.4.0",
-    "@typescript-eslint/parser": "^5.4.0",
-    "eslint": "^8.2.0",
+    "@types/node": "^16.11.11",
+    "@typescript-eslint/eslint-plugin": "^5.9.0",
+    "@typescript-eslint/parser": "^5.9.0",
+    "eslint": "^8.6.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.25.3",
-    "eslint-plugin-jest": "^25.2.4",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jest": "^25.3.4",
     "eslint-plugin-prettier": "^4.0.0",
-    "jest": "^27.3.1",
-    "jest-circus": "^27.3.1",
-    "n3": "^1.11.2",
-    "prettier": "^2.4.1",
-    "ts-jest": "^27.0.7",
-    "typescript": "^4.5.2"
+    "jest": "^27.4.5",
+    "n3": "^1.12.2",
+    "prettier": "^2.5.1",
+    "ts-jest": "^27.1.2",
+    "typescript": "^4.5.4"
   }
 }
