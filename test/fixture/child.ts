@@ -1,33 +1,20 @@
-﻿import type {
-  BlankNode,
-  DataFactory,
-  DatasetCore,
-  NamedNode,
-} from "@rdfjs/types";
-import { getLiteral, setLiteral, stringFactory, Wrapper } from "../../src/mod";
+﻿import { getter, LiteralWrapper, NodeWrapper, setLiteral } from "../../src/mod";
 import { VOCABULARY } from "./vocabulary";
 
-export class Child extends Wrapper {
-  public static wrap(
-    subject: BlankNode | NamedNode,
-    dataset: DatasetCore,
-    factory: DataFactory
-  ): Child {
-    return new Child(subject, dataset, factory);
-  }
-
+export class Child extends NodeWrapper {
   public get name(): string {
-    return getLiteral(
-      this.subject,
+    return getter(
+      this.term,
       this.dataset,
+      this.factory,
       VOCABULARY.hasName,
-      stringFactory
-    );
+      LiteralWrapper
+    ).term.value;
   }
 
   public set name(value: string) {
     setLiteral(
-      this.subject,
+      this.term,
       this.dataset,
       this.factory,
       VOCABULARY.hasName,

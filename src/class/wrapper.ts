@@ -1,18 +1,24 @@
-﻿import type { DataFactory, Quad_Subject, DatasetCore } from "@rdfjs/types";
+﻿import type {
+  BlankNode,
+  DataFactory,
+  DatasetCore,
+  Literal,
+  NamedNode,
+} from "@rdfjs/types";
 
 export abstract class Wrapper {
-  public subject: Quad_Subject;
+  public term: BlankNode | NamedNode | Literal;
 
   protected dataset: DatasetCore;
 
   protected factory: DataFactory;
 
-  protected constructor(
-    subject: Quad_Subject,
+  public constructor(
+    term: BlankNode | NamedNode | Literal,
     dataset: DatasetCore,
     factory: DataFactory
   ) {
-    this.subject = subject;
+    this.term = term;
     this.dataset = dataset;
     this.factory = factory;
   }

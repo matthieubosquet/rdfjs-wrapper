@@ -2,13 +2,12 @@ import type {
   BlankNode,
   DataFactory,
   DatasetCore,
-  Literal,
   NamedNode,
 } from "@rdfjs/types";
 
-export interface IWrapper<T> {
+export interface INodeWrapperConstructor<T> {
   new (
-    term: Literal | BlankNode | NamedNode,
+    term: BlankNode | NamedNode,
     dataset: DatasetCore,
     factory: DataFactory
   ): T;

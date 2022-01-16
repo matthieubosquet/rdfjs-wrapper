@@ -1,37 +1,29 @@
-﻿import type { DataFactory, DatasetCore, Quad_Subject } from "@rdfjs/types";
-import {
-  getLiteral,
-  getNode,
+﻿import {
+  getter,
   setLiteral,
   setNode,
   stringFactory,
-  Wrapper,
+  NodeWrapper,
   WrappingSet,
+  LiteralWrapper,
 } from "../../src/mod";
 import { Child } from "./child";
 import { VOCABULARY } from "./vocabulary";
 
-export class Parent extends Wrapper {
-  public static wrap(
-    subject: Quad_Subject,
-    dataset: DatasetCore,
-    factory: DataFactory
-  ): Parent {
-    return new Parent(subject, dataset, factory);
-  }
-
+export class Parent extends NodeWrapper {
   public get singularStringProperty(): string {
-    return getLiteral(
-      this.subject,
+    return getter(
+      this.term,
       this.dataset,
+      this.factory,
       VOCABULARY.hasSingularString,
-      stringFactory
-    );
+      LiteralWrapper
+    ).term.value;
   }
 
   public set singularStringProperty(value: string) {
     setLiteral(
-      this.subject,
+      this.term,
       this.dataset,
       this.factory,
       VOCABULARY.hasSingularString,
@@ -41,7 +33,7 @@ export class Parent extends Wrapper {
 
   public get stringSetProperty(): Set<string> {
     return new WrappingSet(
-      this.subject,
+      this.term,
       this.dataset,
       this.factory,
       VOCABULARY.hasStringSet,
@@ -50,22 +42,16 @@ export class Parent extends Wrapper {
   }
 
   public get singularProperty(): Child {
-    return getNode(
-      this.subject,
+    return getter(
+      this.term,
       this.dataset,
       this.factory,
       VOCABULARY.hasChild,
-      Child.wrap.bind(this)
+      Child
     );
   }
 
   public set singularProperty(value: Child) {
-    setNode(
-      this.subject,
-      this.dataset,
-      this.factory,
-      VOCABULARY.hasChild,
-      value
-    );
+    setNode(this.term, this.dataset, this.factory, VOCABULARY.hasChild, value);
   }
 }

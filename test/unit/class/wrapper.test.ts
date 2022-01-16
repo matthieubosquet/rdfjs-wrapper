@@ -1,4 +1,4 @@
-import type { Quad } from "n3";
+import type { BlankNode, Quad } from "n3";
 import { DataFactory } from "n3";
 import { Parent } from "../../fixture/parent";
 import { loadRdfString } from "../../util/load_rdf_string";
@@ -24,7 +24,7 @@ beforeAll(() => {
   const t = triples[Symbol.iterator]().next().value as Quad;
   const s = t.subject;
 
-  x = Parent.wrap(s, dataset, DataFactory);
+  x = new Parent(s as BlankNode, dataset, DataFactory);
 });
 
 describe("Wrapper", () => {

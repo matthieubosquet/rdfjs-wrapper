@@ -1,12 +1,13 @@
 import type {
+  BlankNode,
   DataFactory,
   DatasetCore,
+  NamedNode,
   Quad_Predicate,
-  Quad_Subject,
 } from "@rdfjs/types";
 
 export function setLiteral(
-  subject: Quad_Subject,
+  subject: BlankNode | NamedNode,
   dataset: DatasetCore,
   factory: DataFactory,
   property: Quad_Predicate,
