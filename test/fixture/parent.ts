@@ -2,10 +2,9 @@
   getter,
   setLiteral,
   setNode,
-  stringFactory,
   NodeWrapper,
-  WrappingSet,
   LiteralWrapper,
+  PropertyWrapper,
 } from "../../src/mod";
 import { Child } from "./child";
 import { VOCABULARY } from "./vocabulary";
@@ -18,7 +17,7 @@ export class Parent extends NodeWrapper {
       this.factory,
       VOCABULARY.hasSingularString,
       LiteralWrapper
-    ).term.value;
+    ).string;
   }
 
   public set singularStringProperty(value: string) {
@@ -31,13 +30,13 @@ export class Parent extends NodeWrapper {
     );
   }
 
-  public get stringSetProperty(): Set<string> {
-    return new WrappingSet(
+  public get stringSetProperty(): PropertyWrapper<LiteralWrapper> {
+    return new PropertyWrapper(
       this.term,
       this.dataset,
       this.factory,
       VOCABULARY.hasStringSet,
-      stringFactory
+      LiteralWrapper
     );
   }
 

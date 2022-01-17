@@ -12,4 +12,8 @@ export class LiteralWrapper extends Wrapper {
     super(term, dataset, factory);
     this.term = term;
   }
+
+  get string(): string {
+    return this.term.value;
+  }
 }
