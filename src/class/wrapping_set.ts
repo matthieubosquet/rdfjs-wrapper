@@ -10,7 +10,7 @@
 } from "@rdfjs/types";
 import { NodeWrapper } from "./node_wrapper";
 
-export class WrappingSet<T extends { term: Quad_Subject } | string | number>
+export class WrappingSet<T extends { term: Quad_Object } | string | number>
   extends NodeWrapper
   implements Set<T>
 {
