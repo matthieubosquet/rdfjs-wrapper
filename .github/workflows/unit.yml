@@ -7,6 +7,4 @@ on:
 
 jobs:
   test-unit:
-    uses: matthieubosquet/workflows/.github/workflows/node-test-unit.yml@v0.9.4
-    with:
-      node: 16
+    uses: matthieubosquet/workflows/.github/workflows/node-test-unit.yml@v0.9.5
