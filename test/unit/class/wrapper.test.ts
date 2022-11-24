@@ -1,7 +1,6 @@
-import type { BlankNode, Quad } from "n3";
-import { DataFactory } from "n3";
-import { Parent } from "../../fixture/parent";
-import { loadRdfString } from "../../util/load_rdf_string";
+import type { BlankNode, Quad } from "@rdfjs/types";
+import { DataFactory, Store, Parser } from "n3";
+import { Parent } from "../fixture/parent";
 
 let x: Parent;
 
@@ -17,7 +16,9 @@ beforeAll(() => {
 
   `;
 
-  const dataset = loadRdfString(rdf);
+  const dataset = new Store();
+
+  dataset.addQuads(new Parser().parse(rdf));
 
   const triples = dataset.match();
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

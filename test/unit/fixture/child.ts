@@ -1,4 +1,4 @@
-﻿import { getter, LiteralWrapper, NodeWrapper, setLiteral } from "../../src/mod";
+﻿import { getter, LiteralWrapper, NodeWrapper, setLiteral } from "../../../src/mod";
 import { VOCABULARY } from "./vocabulary";
 
 export class Child extends NodeWrapper {

@@ -5,7 +5,7 @@
   NodeWrapper,
   LiteralWrapper,
   PropertyWrapper,
-} from "../../src/mod";
+} from "../../../src/mod";
 import { Child } from "./child";
 import { VOCABULARY } from "./vocabulary";
 
