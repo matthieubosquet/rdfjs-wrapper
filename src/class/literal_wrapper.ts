@@ -1,7 +1,7 @@
 ﻿import type { DataFactory, DatasetCore, Literal } from "@rdfjs/types";
 import { Wrapper } from "./wrapper";
 
-export class LiteralWrapper extends Wrapper {
+export class LiteralWrapper extends Wrapper<Literal> {
   public term: Literal;
 
   public constructor(
@@ -11,9 +11,5 @@ export class LiteralWrapper extends Wrapper {
   ) {
     super(term, dataset, factory);
     this.term = term;
-  }
-
-  get string(): string {
-    return this.term.value;
   }
 }

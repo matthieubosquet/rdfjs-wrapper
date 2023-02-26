@@ -6,7 +6,7 @@
 } from "@rdfjs/types";
 import { Wrapper } from "./wrapper";
 
-export abstract class NodeWrapper extends Wrapper {
+export abstract class NodeWrapper extends Wrapper<BlankNode | NamedNode> {
   public term: BlankNode | NamedNode;
 
   public constructor(

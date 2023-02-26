@@ -1,7 +1,6 @@
 // Classes
 export { LiteralWrapper } from "./class/literal_wrapper";
 export { NodeWrapper } from "./class/node_wrapper";
-export { PropertyWrapper } from "./class/property_wrapper";
 export { Wrapper } from "./class/wrapper";
 export { WrappingSet } from "./class/wrapping_set";
 

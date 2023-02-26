@@ -6,20 +6,26 @@
   NamedNode,
 } from "@rdfjs/types";
 
-export abstract class Wrapper {
-  public term: BlankNode | NamedNode | Literal;
+export type Node = Literal | BlankNode | NamedNode;
+
+export abstract class Wrapper<T extends Node> {
+  public term: T;
 
   protected dataset: DatasetCore;
 
   protected factory: DataFactory;
 
   public constructor(
-    term: BlankNode | NamedNode | Literal,
+    term: T,
     dataset: DatasetCore,
     factory: DataFactory
   ) {
     this.term = term;
     this.dataset = dataset;
     this.factory = factory;
+  }
+
+  get toString(): string {
+    return this.term.value;
   }
 }
