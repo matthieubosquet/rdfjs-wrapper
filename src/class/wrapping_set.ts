@@ -10,10 +10,7 @@
 } from "@rdfjs/types";
 import { NodeWrapper } from "./node_wrapper";
 
-export class WrappingSet<T>
-  extends NodeWrapper
-  implements Set<T>
-{
+export class WrappingSet<T> extends NodeWrapper implements Set<T> {
   private property: Quad_Predicate;
 
   private valueFactory: (term: Term, dataset?: DatasetCore) => T;
