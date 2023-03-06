@@ -1,6 +1,6 @@
 {
   "name": "rdfjs-wrapper",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "description": "RDF/JS compliant graph wrapping library",
   "license": "MIT",
   "repository": "https://github.com/matthieubosquet/rdfjs-wrapper",
