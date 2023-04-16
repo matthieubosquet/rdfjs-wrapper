@@ -1,26 +1,25 @@
 ﻿import {
   ObjectSet,
-  ResourceReader,
-  ResourceWriter,
+  PropertyReader,
+  PropertyWriter,
   Wrapper
 } from "rdfjs-wrapper";
 import { Child } from "./child.js";
 import { VOCAB } from "./vocabulary.js";
-import { BlankNode, NamedNode } from "@rdfjs/types";
 
 export class Parent extends Wrapper {
   #singularStringProperty() {
     return this.property(
       VOCAB.hasSingularString,
-      ResourceReader.asString,
-      ResourceWriter.asLiteral
+      PropertyReader.asString,
+      PropertyWriter.asLiteral
     )
   }
 
   #singularProperty() {
     return this.property(
       VOCAB.hasChild,
-      (x) => new Child(x as NamedNode | BlankNode, this.dataset, this.factory),
+      PropertyReader.asWrapperOf(Child, this.dataset, this.factory),
       (x: Child) => this.factory.literal("")
     )
   }
@@ -37,15 +36,15 @@ export class Parent extends Wrapper {
   public get stringSetProperty(): ObjectSet<string> {
     return this.property(
       VOCAB.hasStringSet,
-      ResourceReader.asString,
-      ResourceWriter.asLiteral
+      PropertyReader.asString,
+      PropertyWriter.asLiteral
     )
   }
 
   public get childSetProperty(): ObjectSet<Child> {
     return this.property(
       VOCAB.hasChildSet,
-      (x) => new Child(x as NamedNode | BlankNode, this.dataset, this.factory),
+      PropertyReader.asWrapperOf(Child, this.dataset, this.factory),
       (x: Child) => this.factory.literal("")
     );
   }

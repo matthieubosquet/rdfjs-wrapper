@@ -1,5 +1,5 @@
 export { ObjectSet } from "./class/object_set.js";
+export { PropertyReader } from "./class/property_reader.js";
+export { PropertyWriter } from "./class/property_writer.js";
 export { Resource } from "./class/resource.js";
-export { ResourceReader } from "./class/resource_reader.js";
-export { ResourceWriter } from "./class/resource_writer.js";
 export { Wrapper } from "./class/wrapper.js";

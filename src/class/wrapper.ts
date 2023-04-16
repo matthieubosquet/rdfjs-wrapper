@@ -6,8 +6,13 @@
   Term,
 } from "@rdfjs/types";
 import { ObjectSet } from "./object_set.js";
+import { Resource } from "./resource.js";
 
-export abstract class Wrapper {
+export type WrapperConstructor<T extends Wrapper> = {
+  new(resource: Term, dataset: DatasetCore, factory: DataFactory): T;
+}
+
+export class Wrapper {
   private resource: BlankNode | NamedNode
 
   protected dataset: DatasetCore
@@ -15,9 +20,7 @@ export abstract class Wrapper {
   protected factory: DataFactory
 
   public constructor(resource: Term, dataset: DatasetCore, factory: DataFactory) {
-    if (resource.termType != "BlankNode" && resource.termType != "NamedNode") {
-      throw new Error("Term is neither a BlankNode nor a NamedNode")
-    }
+    Resource.assertNode(resource);
 
     this.resource = resource
     this.dataset = dataset

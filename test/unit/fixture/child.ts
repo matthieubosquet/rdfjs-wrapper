@@ -1,9 +1,13 @@
-﻿import { ResourceReader, ResourceWriter, Wrapper } from "rdfjs-wrapper";
+﻿import {
+  PropertyReader,
+  PropertyWriter,
+  Wrapper
+} from "rdfjs-wrapper";
 import { VOCAB } from "./vocabulary.js";
 
 export class Child extends Wrapper {
   #name() {
-    return this.property(VOCAB.hasName, ResourceReader.asString, ResourceWriter.asLiteral)
+    return this.property(VOCAB.hasName, PropertyReader.asString, PropertyWriter.asLiteral)
   }
 
   public get name(): string {

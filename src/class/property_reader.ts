@@ -1,12 +1,15 @@
 ﻿import type {
   BlankNode,
+  DataFactory,
+  DatasetCore,
   Literal,
   NamedNode,
   Term,
 } from "@rdfjs/types";
 import { INode, IResource, Resource } from "./resource.js"
+import { Wrapper, WrapperConstructor } from "./wrapper.js";
 
-export abstract class ResourceReader {
+export abstract class PropertyReader {
   static asResource(x: Term): IResource {
     Resource.assertResource(x)
 
@@ -41,5 +44,11 @@ export abstract class ResourceReader {
     Resource.assertString(x)
 
     return x.value
+  }
+
+  static asWrapperOf<T extends Wrapper>(w: WrapperConstructor<T>, d: DatasetCore, f: DataFactory): (x: Term) => T {
+    return (x: Term): T => {
+      return new w(x, d, f)
+    }
   }
 }
