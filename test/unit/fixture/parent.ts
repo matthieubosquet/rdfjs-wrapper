@@ -1,56 +1,61 @@
 ﻿import {
-  getter,
-  setLiteral,
-  setNode,
-  NodeWrapper,
-  LiteralWrapper,
-  WrappingSet,
-} from "../../../src/mod";
-import { Child } from "./child";
-import { VOCABULARY } from "./vocabulary";
+  ObjectSet,
+  ResourceReader,
+  ResourceWriter,
+  Wrapper
+} from "rdfjs-wrapper";
+import { Child } from "./child.js";
+import { VOCAB } from "./vocabulary.js";
+import { BlankNode, NamedNode } from "@rdfjs/types";
 
-export class Parent extends NodeWrapper {
+export class Parent extends Wrapper {
+  #singularStringProperty() {
+    return this.property(
+      VOCAB.hasSingularString,
+      ResourceReader.asString,
+      ResourceWriter.asLiteral
+    )
+  }
+
+  #singularProperty() {
+    return this.property(
+      VOCAB.hasChild,
+      (x) => new Child(x as NamedNode | BlankNode, this.dataset, this.factory),
+      (x: Child) => this.factory.literal("")
+    )
+  }
+
   public get singularStringProperty(): string {
-    return getter(
-      this.term,
-      this.dataset,
-      this.factory,
-      VOCABULARY.hasSingularString,
-      LiteralWrapper
-    ).toString;
+    return this.#singularStringProperty().values().next().value
   }
 
   public set singularStringProperty(value: string) {
-    setLiteral(
-      this.term,
-      this.dataset,
-      this.factory,
-      VOCABULARY.hasSingularString,
-      value
-    );
+    this.#singularStringProperty().clear()
+    this.#singularStringProperty().add(value)
   }
 
-  public get stringSetProperty(): WrappingSet<string> {
-    return new WrappingSet(
-      this.term,
-      this.dataset,
-      this.factory,
-      VOCABULARY.hasStringSet,
-      (x) => x.value
+  public get stringSetProperty(): ObjectSet<string> {
+    return this.property(
+      VOCAB.hasStringSet,
+      ResourceReader.asString,
+      ResourceWriter.asLiteral
+    )
+  }
+
+  public get childSetProperty(): ObjectSet<Child> {
+    return this.property(
+      VOCAB.hasChildSet,
+      (x) => new Child(x as NamedNode | BlankNode, this.dataset, this.factory),
+      (x: Child) => this.factory.literal("")
     );
   }
 
   public get singularProperty(): Child {
-    return getter(
-      this.term,
-      this.dataset,
-      this.factory,
-      VOCABULARY.hasChild,
-      Child
-    );
+    return this.#singularProperty().values().next().value
   }
 
   public set singularProperty(value: Child) {
-    setNode(this.term, this.dataset, this.factory, VOCABULARY.hasChild, value);
+    this.#singularProperty().clear()
+    this.#singularProperty().add(value)
   }
 }

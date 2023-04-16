@@ -1,20 +1,28 @@
+import test from 'ava';
 import type { BlankNode, Quad } from "@rdfjs/types";
 import { DataFactory, Store, Parser } from "n3";
-import { Parent } from "../fixture/parent";
+import { Parent } from "../fixture/parent.js"
+//import { WrappingSet } from "rdfjs-wrapper";
 
-let x: Parent;
+type Context = {
+  parent: Parent
+}
 
-beforeAll(() => {
+test.before(t => {
   const rdf = `
-  prefix : <https://example.org/>
-  [
-      :singularStringPredicate "o1" ;
-      :child [
-          :name "name" ;
-      ] ;
-  ] .
-
-  `;
+prefix : <https://example.org/>
+[
+  :hasString "o1" ;
+  :hasChild [
+    :name "name" ;
+  ] ;
+  :hasChildSet [
+    :name "1" ;
+  ], [
+    :name "2" ;
+  ]
+] .
+`;
 
   const dataset = new Store();
 
@@ -22,36 +30,40 @@ beforeAll(() => {
 
   const triples = dataset.match();
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const t = triples[Symbol.iterator]().next().value as Quad;
-  const s = t.subject;
+  const triple = triples[Symbol.iterator]().next().value as Quad;
+  const s = triple.subject;
 
-  x = new Parent(s as BlankNode, dataset, DataFactory);
+  (t.context as Context).parent = new Parent(s as BlankNode, dataset, DataFactory);
+
 });
 
-describe("Wrapper", () => {
-  it("has singular string predicate", () => {
-    expect(x.singularStringProperty).toBe("o1");
-  });
+test('has singular string predicate', t => {
+  t.is((t.context as Context).parent.singularStringProperty, "o1")
+});
 
-  it("has child object with name", () => {
-    expect(x.singularProperty.name).toBe("name");
-  });
+test('has child object with name', t => {
+  t.is((t.context as Context).parent.singularProperty.name, "name")
+});
 
-  it("sets singular predicate to different value", () => {
-    x.singularStringProperty = "o2";
-    expect(x.singularStringProperty).toBe("o2");
-  });
+test('sets singular predicate to different value', t => {
+  (t.context as Context).parent.singularStringProperty = "o2";
 
-  it("has an empty string set", () => {
-    expect(x.stringSetProperty.size).toBe(0);
-  });
+  t.is((t.context as Context).parent.singularStringProperty, "o2")
+});
 
-  it("adds to an empty string set", () => {
-    x.stringSetProperty.add("x");
-    x.stringSetProperty.add("y");
-    expect(x.stringSetProperty.size).toBe(2);
-    expect(x.stringSetProperty.has("x") && x.stringSetProperty.has("y")).toBe(
-      true
-    );
-  });
+test('has an empty string set', t => {
+  t.is((t.context as Context).parent.stringSetProperty.size, 0)
+});
+
+test('adds to an empty string set', t => {
+  (t.context as Context).parent.stringSetProperty.add("x");
+
+  (t.context as Context).parent.stringSetProperty.add("y");
+
+  t.is((t.context as Context).parent.stringSetProperty.has("x"), true)
+  t.is((t.context as Context).parent.stringSetProperty.has("y"), true)
+});
+
+test('has elements in child set', t => {
+  t.is((t.context as Context).parent.childSetProperty.size, 2)
 });

@@ -1,15 +1,15 @@
 {
-  "extends": "@tsconfig/node18/tsconfig.json",
   "compilerOptions": {
-    "declaration": true,
-    "incremental": true,
-    "inlineSources": true,
-    "newLine": "lf",
-    "noUnusedLocals": true,
     "outDir": "dist",
-    "preserveConstEnums": true,
+    "target": "es2022",
+    "lib": [
+      "es2022", "DOM"
+    ],
+    "module": "ES2022",
+    "moduleResolution": "node",
+    "strict": true,
     "sourceMap": true,
-    "stripInternal": true
+    "declaration": true,
   },
   "include": ["src/mod.ts"]
 }

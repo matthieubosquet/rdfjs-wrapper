@@ -1,29 +1,17 @@
-﻿import {
-  getter,
-  LiteralWrapper,
-  NodeWrapper,
-  setLiteral,
-} from "../../../src/mod";
-import { VOCABULARY } from "./vocabulary";
+﻿import { ResourceReader, ResourceWriter, Wrapper } from "rdfjs-wrapper";
+import { VOCAB } from "./vocabulary.js";
 
-export class Child extends NodeWrapper {
+export class Child extends Wrapper {
+  #name() {
+    return this.property(VOCAB.hasName, ResourceReader.asString, ResourceWriter.asLiteral)
+  }
+
   public get name(): string {
-    return getter(
-      this.term,
-      this.dataset,
-      this.factory,
-      VOCABULARY.hasName,
-      LiteralWrapper
-    ).term.value;
+    return this.#name().values().next().value
   }
 
   public set name(value: string) {
-    setLiteral(
-      this.term,
-      this.dataset,
-      this.factory,
-      VOCABULARY.hasName,
-      value
-    );
+    this.#name().clear
+    this.#name().add(value)
   }
 }
