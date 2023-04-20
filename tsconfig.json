@@ -2,14 +2,12 @@
   "compilerOptions": {
     "outDir": "dist",
     "target": "es2022",
-    "lib": [
-      "es2022", "DOM"
-    ],
+    "lib": ["es2022", "DOM"],
     "module": "ES2022",
     "moduleResolution": "node",
     "strict": true,
     "sourceMap": true,
-    "declaration": true,
+    "declaration": true
   },
   "include": ["src/mod.ts"]
 }
