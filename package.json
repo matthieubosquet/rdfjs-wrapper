@@ -1,6 +1,6 @@
 {
   "name": "rdfjs-wrapper",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "RDF/JS compliant graph wrapping library",
   "type": "module",
   "types": "./dist/mod.d.ts",
