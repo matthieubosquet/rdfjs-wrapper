@@ -1,60 +1,40 @@
 ﻿import {
-  ObjectSet,
-  PropertyReader,
-  PropertyWriter,
+  Property,
   Wrapper
-} from "rdfjs-wrapper";
+} from "../../../src/mod.js";
 import { Child } from "./child.js";
 import { VOCAB } from "./vocabulary.js";
 
 export class Parent extends Wrapper {
   #singularStringProperty() {
-    return this.property(
-      VOCAB.hasSingularString,
-      PropertyReader.asString,
-      PropertyWriter.asLiteral
-    )
-  }
-
-  #singularProperty() {
-    return this.property(
-      VOCAB.hasChild,
-      PropertyReader.asWrapperOf(Child, this.dataset, this.factory),
-      (x: Child) => this.factory.literal("")
-    )
+    return this.stringItem(VOCAB.hasSingularString)
   }
 
   public get singularStringProperty(): string {
-    return this.#singularStringProperty().values().next().value
+    return this.#singularStringProperty().get()
   }
 
   public set singularStringProperty(value: string) {
-    this.#singularStringProperty().clear()
-    this.#singularStringProperty().add(value)
+    this.#singularStringProperty().set(value)
   }
 
-  public get stringSetProperty(): ObjectSet<string> {
-    return this.property(
-      VOCAB.hasStringSet,
-      PropertyReader.asString,
-      PropertyWriter.asLiteral
-    )
-  }
-
-  public get childSetProperty(): ObjectSet<Child> {
-    return this.property(
-      VOCAB.hasChildSet,
-      PropertyReader.asWrapperOf(Child, this.dataset, this.factory),
-      (x: Child) => this.factory.literal("")
-    );
+  #singularProperty() {
+    return this.wrapperItem<Child>(VOCAB.hasChild, Child)
   }
 
   public get singularProperty(): Child {
-    return this.#singularProperty().values().next().value
+    return this.#singularProperty().get()
   }
 
   public set singularProperty(value: Child) {
-    this.#singularProperty().clear()
-    this.#singularProperty().add(value)
+    this.#singularProperty().set(value)
+  }
+
+  public get stringSetProperty(): Property<string> {
+    return this.stringProperty(VOCAB.hasStringSet)
+  }
+
+  public get childSetProperty(): Property<Child> {
+    return this.wrapperProperty(VOCAB.hasChildSet, Child);
   }
 }

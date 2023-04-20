@@ -1,17 +1,19 @@
-import test from 'ava';
-import type { BlankNode, Quad } from "@rdfjs/types";
-import { DataFactory, Store, Parser } from "n3";
+import type { DatasetCore } from '@rdfjs/types';
+import anyTest, { TestFn } from 'ava';
+import { DataFactory, Store, Parser, BlankNode, NamedNode } from "n3";
 import { Parent } from "../fixture/parent.js"
-//import { WrappingSet } from "rdfjs-wrapper";
+import { Context } from '../../../src/class/context.js';
+import { Child } from '../fixture/child.js';
 
-type Context = {
+const test = anyTest as TestFn<{
+  dataset: DatasetCore
   parent: Parent
-}
+}>;
 
 test.before(t => {
   const rdf = `
 prefix : <https://example.org/>
-[
+<x>
   :hasString "o1" ;
   :hasChild [
     :name "name" ;
@@ -20,50 +22,59 @@ prefix : <https://example.org/>
     :name "1" ;
   ], [
     :name "2" ;
-  ]
-] .
+  ] .
 `;
 
   const dataset = new Store();
 
   dataset.addQuads(new Parser().parse(rdf));
 
-  const triples = dataset.match();
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const triple = triples[Symbol.iterator]().next().value as Quad;
-  const s = triple.subject;
+  const parent = new Parent(DataFactory.namedNode("x"), new Context(dataset, DataFactory))
 
-  (t.context as Context).parent = new Parent(s as BlankNode, dataset, DataFactory);
-
+  t.context = {
+    dataset,
+    parent,
+  };
 });
 
 test('has singular string predicate', t => {
-  t.is((t.context as Context).parent.singularStringProperty, "o1")
+  t.is(t.context.parent.singularStringProperty, "o1")
 });
 
 test('has child object with name', t => {
-  t.is((t.context as Context).parent.singularProperty.name, "name")
+  t.is(t.context.parent.singularProperty.name, "name")
 });
 
 test('sets singular predicate to different value', t => {
-  (t.context as Context).parent.singularStringProperty = "o2";
+  t.context.parent.singularStringProperty = "o2";
 
-  t.is((t.context as Context).parent.singularStringProperty, "o2")
+  t.is(t.context.parent.singularStringProperty, "o2")
 });
 
 test('has an empty string set', t => {
-  t.is((t.context as Context).parent.stringSetProperty.size, 0)
+  t.is(t.context.parent.stringSetProperty.size, 0)
 });
 
 test('adds to an empty string set', t => {
-  (t.context as Context).parent.stringSetProperty.add("x");
+  t.context.parent.stringSetProperty.add("x");
 
-  (t.context as Context).parent.stringSetProperty.add("y");
+  t.context.parent.stringSetProperty.add("y");
 
-  t.is((t.context as Context).parent.stringSetProperty.has("x"), true)
-  t.is((t.context as Context).parent.stringSetProperty.has("y"), true)
+  t.is(t.context.parent.stringSetProperty.has("x"), true)
+  t.is(t.context.parent.stringSetProperty.has("y"), true)
 });
 
 test('has elements in child set', t => {
-  t.is((t.context as Context).parent.childSetProperty.size, 2)
+  t.is(t.context.parent.childSetProperty.size, 2)
+});
+
+test('adds element in child set', t => {
+  var child = new Child(DataFactory.blankNode(), new Context(t.context.dataset, DataFactory))
+  child.name = "new child"
+
+  t.context.parent.childSetProperty.add(child)
+
+  t.is(t.context.parent.childSetProperty.size, 3)
+
+  t.is(t.context.parent.childSetProperty.has(child), true)
 });

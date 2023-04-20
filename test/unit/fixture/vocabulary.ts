@@ -4,7 +4,7 @@ import { DataFactory } from "n3";
 export const baseUri = "https://example.org/";
 
 export const VOCAB = {
-  hasSingularString: baseUri.concat("hasString"),
+  hasSingularString: DataFactory.namedNode(baseUri.concat("hasString")),
   hasStringSet: baseUri.concat("hasStringSet"),
   hasChild: baseUri.concat("hasChild"),
   hasChildSet: baseUri.concat("hasChildSet"),

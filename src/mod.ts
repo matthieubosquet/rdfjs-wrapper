@@ -1,5 +1,6 @@
-export { ObjectSet } from "./class/object_set.js";
-export { PropertyReader } from "./class/property_reader.js";
-export { PropertyWriter } from "./class/property_writer.js";
-export { Resource } from "./class/resource.js";
-export { Wrapper } from "./class/wrapper.js";
+export { Context } from "./class/context.js"
+export { Property } from "./class/property.js"
+export { PropertyReader } from "./class/property_reader.js"
+export { PropertyWriter } from "./class/property_writer.js"
+export { Resource } from "./class/resource.js"
+export { Wrapper } from "./class/wrapper.js"

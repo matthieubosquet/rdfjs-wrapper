@@ -1,54 +1,77 @@
 ﻿import type {
   BlankNode,
-  DataFactory,
-  DatasetCore,
   Literal,
   NamedNode,
   Term,
 } from "@rdfjs/types";
-import { INode, IResource, Resource } from "./resource.js"
-import { Wrapper, WrapperConstructor } from "./wrapper.js";
+import type { Context } from "./context.js";
+import type { Wrapper, WrapperConstructor } from "./wrapper.js";
+import { Resource } from "./resource.js"
 
 export abstract class PropertyReader {
-  static asResource(x: Term): IResource {
-    Resource.assertResource(x)
+  static toResource(): (x: Term) => BlankNode | NamedNode | Literal {
+    return (x: Term): BlankNode | NamedNode | Literal => {
+      Resource.assertResource(x)
 
-    return x
+      return x
+    }
   }
 
-  static asNode(x: Term): INode {
-    Resource.assertNode(x)
+  static toNode(): (x: Term) => BlankNode | NamedNode {
+    return (x: Term): BlankNode | NamedNode => {
+      Resource.assertNode(x)
 
-    return x
+      return x
+    }
   }
 
-  static asBlankNode(x: Term): BlankNode {
-    Resource.assertBlankNode(x)
+  static toBlankNode(): (x: Term) => BlankNode {
+    return (x: Term): BlankNode => {
+      Resource.assertBlankNode(x)
 
-    return x
+      return x
+    }
   }
 
-  static asNamedNode(x: Term): NamedNode {
-    Resource.assertNamedNode(x)
+  static toNamedNode(): (x: Term) => NamedNode {
+    return (x: Term): NamedNode => {
+      Resource.assertNamedNode(x)
 
-    return x
+      return x
+    }
   }
 
-  static asLiteral(x: Term): Literal {
-    Resource.assertLiteral(x)
+  static toLiteral(): (x: Term) => Literal {
+    return (x: Term): Literal => {
+      Resource.assertLiteral(x)
 
-    return x
+      return x
+    }
   }
 
-  static asString(x: Term): string {
-    Resource.assertString(x)
+  static toString(): (x: Term) => string {
+    return (x: Term): string => {
+      Resource.assertString(x)
 
-    return x.value
+      return x.value
+    }
   }
 
-  static asWrapperOf<T extends Wrapper>(w: WrapperConstructor<T>, d: DatasetCore, f: DataFactory): (x: Term) => T {
-    return (x: Term): T => {
-      return new w(x, d, f)
+  static toNumber(): (x: Term) => string {
+    return (x: Term): string => {
+      Resource.assertNumber(x)
+
+      return x.value
+    }
+  }
+
+  static toWrapper<T extends Wrapper>(w: WrapperConstructor<T>): (
+    context: Context
+  )  => (x: Term) => T {
+    return (context: Context) => {
+      return (x: Term): T => {
+        return new w(x, context)
+      }
     }
   }
 }

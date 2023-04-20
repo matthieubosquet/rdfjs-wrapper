@@ -1,21 +1,18 @@
 ﻿import {
-  PropertyReader,
-  PropertyWriter,
   Wrapper
-} from "rdfjs-wrapper";
+} from "../../../src/mod.js";
 import { VOCAB } from "./vocabulary.js";
 
 export class Child extends Wrapper {
   #name() {
-    return this.property(VOCAB.hasName, PropertyReader.asString, PropertyWriter.asLiteral)
+    return this.stringItem(VOCAB.hasName)
   }
 
   public get name(): string {
-    return this.#name().values().next().value
+    return this.#name().get()
   }
 
   public set name(value: string) {
-    this.#name().clear
-    this.#name().add(value)
+    this.#name().set(value)
   }
 }

@@ -27,14 +27,14 @@
     "build": "tsc",
     "lint": "npm run lint:eslint -- --cache --fix && npm run lint:prettier -- --write",
     "lint:ci": "npm run lint:eslint && npm run lint:prettier -- --check",
-    "lint:eslint": "eslint --ignore-path .gitignore .",
+    "lint:eslint": "eslint .",
     "lint:prettier": "prettier '**/*.{css,html,json,md,mdx,yml}' --ignore-path .gitignore",
     "prepublishOnly": "npm run audit && npm ci --ignore-scripts && npm run build && npm run test",
     "start": "npm run build -- --watch",
     "test": "npm run test:build && npx ava",
     "test:build": "npm run build && npm pack && npm install --save-dev rdfjs-wrapper-*.tgz && rm rdfjs-wrapper-*.tgz",
     "test:e2e": "",
-    "test:unit": ""
+    "test:unit": "npx ava"
   },
   "devDependencies": {
     "@ava/typescript": "^4.0.0",
@@ -49,7 +49,6 @@
     "eslint-config-prettier": "^8.8.0",
     "n3": "^1.16.4",
     "prettier": "^2.8.7",
-    "rdfjs-wrapper": "file:rdfjs-wrapper-0.2.0.tgz",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.0.4"
