@@ -39,7 +39,7 @@
   "devDependencies": {
     "@ava/typescript": "^4.0.0",
     "@eslint/js": "^8.38.0",
-    "@rdfjs/types": "^1.1.0",
+    "@rdfjs/types": "^1.1.2",
     "@tsconfig/node18": "^1.0.1",
     "@types/n3": "^1.10.4",
     "@types/node": "^18.15.11",
@@ -47,10 +47,10 @@
     "ava": "^5.2.0",
     "eslint": "^8.38.0",
     "eslint-config-prettier": "^8.8.0",
-    "n3": "^1.16.4",
+    "n3": "^1.22.0",
     "prettier": "^2.8.7",
-    "ts-node": "^10.9.1",
+    "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.0.4"
+    "typescript": "^5.6.2"
   }
 }
